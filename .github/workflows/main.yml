@@ -1,0 +1,27 @@
+name: CI Mentoria
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  tests:
+    runs-on:  ubuntu-latest
+    env:
+      API_BASE_URL: 'http://localhost:3000'
+      PORT: 4000
+    steps:
+      - name: Clone do Projeto
+        uses: actions/checkout@v4
+
+      - name: Instalando as depências do projeto
+        run: npm install
+
+      - name: Iniciando o servidor de mocks
+        run: npm rum mock-server &
+
+      - name: Iniciando o servidor da aplicacao
+        run: npm rum server &
+
+      - name: Iniciando os testes completos
+        run: npx cypress run
+        
